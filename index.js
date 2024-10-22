@@ -1,8 +1,8 @@
 //lo mas limpio posible y que de aca nos redireccione a las distintas areas de la app
 import express from "express"
 import router from "./routes/router.js"
-import { notFound } from "./midlewares/notFound.js"
 import morgan from "morgan"
+import connection from "./connection/connection.js"
 
 const app = express() //ejecutado express, creado el servidor
 
