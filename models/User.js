@@ -12,11 +12,16 @@ User.init(
         },
         mail:{
             type: DataTypes.STRING,
-            allowNull:false
+            allowNull:false,
+            unique: true
         },
         password:{
             type: DataTypes.STRING,
             allowNull:false
+        }, 
+        RoleId:{
+            type:DataTypes.INTEGER,
+            defaultValue:2
         }
     },
     {

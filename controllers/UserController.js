@@ -29,8 +29,9 @@ class UserController{
     }
     createUser= async(req, res)=>{
         try{
-            const{name, password} = req.body 
-            const data = await this.userService.createUserService(name, password)
+            const{name, password, mail, RoleId} = req.body //para filtrar la info que viene del body 
+            const data = await this.userService.createUserService({name, password, mail, RoleId})
+            console.log(data)
             res
             .status(200)
             .send({success:true, message: data});

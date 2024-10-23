@@ -3,7 +3,8 @@ import express from "express"
 import router from "./routes/router.js"
 import morgan from "morgan"
 import connection from "./connection/connection.js"
-import User from "./models/User.js"
+//import User from "./models/User.js"
+//import Role from "./models/Role.js"
 
 const app = express() //ejecutado express, creado el servidor
 
@@ -21,7 +22,7 @@ app.use(morgan('tiny'))
 app.use("/app",router) //usa rutas
 
 // sync de db
-await connection.sync()
+await connection.sync({force:false})
 
 // listen
 app.listen(8000, ()=> {
