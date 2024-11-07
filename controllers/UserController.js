@@ -41,6 +41,20 @@ class UserController{
             .send({success:false, message: error.message});
         }
     }
+    login= async(req, res)=>{
+        try{
+            const{password, mail} = req.body //para filtrar la info que viene del body 
+            const data = await this.userService.loginService({password, mail})
+            console.log(data)
+            res
+            .status(200)
+            .send({success:true, message: data});
+        } catch(error){
+            res
+            .status(400)
+            .send({success:false, message: error.message});
+        }
+    }
     updateUser= async(req, res)=>{
         try{
             const {id} = req.params
@@ -70,5 +84,6 @@ class UserController{
     }
 
 }
+
 
 export default UserController

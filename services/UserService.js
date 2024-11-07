@@ -25,6 +25,22 @@ class UserService{
             throw error
         }
     }
+    loginService=async(user)=> {
+        //`createUserService ${name} ${password} ${mail} `
+        try {
+            const {mail, password} = user
+            const userLogin = await User.findOne({where:{mail}})
+            if (!userLogin){
+                throw new Error("No pasas")
+            } else{
+                const comparePass = await userLogin.compare(password)
+                console.log(comparePass)
+            }
+            return userLogin
+        } catch(error){
+            throw error
+        }
+    }
     updateUserService=async(id, name, password)=> {
         return `updateUserService ${id} ${name} ${password}`
     }

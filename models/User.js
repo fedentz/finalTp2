@@ -1,8 +1,15 @@
 import { DataTypes, Model } from "sequelize";
-
 import connection from "../connection/connection.js";
+import bcrypt from "bcrypt"
 
-class User extends Model{}
+class User extends Model{
+
+    compare = async(passwordTxtPlain)=>{
+        const data =  await bcrypt.compareSync(passwordTxtPlain, this.password)
+        return data
+    }
+
+}
 
 User.init(
     {
@@ -22,6 +29,9 @@ User.init(
         RoleId:{
             type:DataTypes.INTEGER,
             defaultValue:2
+        },
+        salt:{
+            type: DataTypes.STRING
         }
     },
     {
@@ -29,5 +39,19 @@ User.init(
         modelName:"User"
     }
 )
+
+User.beforeCreate(async(user)=> {
+
+const salt = await bcrypt.genSalt(10) //10 = saltRounds
+
+user.salt = salt
+
+const hash = await bcrypt.hash(user.password,salt)
+
+user.password = hash
+
+console.log(salt)
+console.log("user.beforeCreate " + user)
+})
 
 export default User

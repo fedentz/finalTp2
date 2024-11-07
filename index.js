@@ -23,7 +23,7 @@ app.use("/app",router) //usa rutas
 
 // sync de db
 await connection.sync({force:false})
-await roleSeed()
+//await roleSeed()
 
 // listen
 app.listen(SERVER_PORT, ()=> {
