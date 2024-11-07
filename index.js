@@ -3,8 +3,8 @@ import express from "express"
 import router from "./routes/router.js"
 import morgan from "morgan"
 import connection from "./connection/connection.js"
-//import User from "./models/User.js"
-//import Role from "./models/Role.js"
+import { SERVER_PORT } from "./config/config.js"
+import roleSeed from "./seed/roleSeed.js"
 
 const app = express() //ejecutado express, creado el servidor
 
@@ -23,8 +23,9 @@ app.use("/app",router) //usa rutas
 
 // sync de db
 await connection.sync({force:false})
+await roleSeed()
 
 // listen
-app.listen(8000, ()=> {
+app.listen(SERVER_PORT, ()=> {
     console.log("app listening on port 8000");
 })
