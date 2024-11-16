@@ -46,9 +46,10 @@ class UserController{
             const{password, mail} = req.body //para filtrar la info que viene del body 
             const data = await this.userService.loginService({password, mail})
             console.log(data)
+            res.cookie("token",data)
             res
             .status(200)
-            .send({success:true, message: data});
+            .send({success:true, message: "Usuario loggeado con exito"});
         } catch(error){
             res
             .status(400)
@@ -82,6 +83,21 @@ class UserController{
             .send({success:false, message: error.message});
         }
     }
+    getMe = async (req, res) => {
+        try {
+          const { token } = req.cookies;
+          //console.log(`🚀 ~ UserControllers ~ getMe= ~ token:`, token)
+          const user = await this.userService.me(token);
+          //console.log(`🚀 ~ UserControllers ~ login= ~ user:`, user)
+    
+          res.status(200).send({ success: true, message: user});
+        } catch (error) {
+          res.status(400).send({
+            success: false,
+            message: error.message,
+          });
+        }
+      };
 
 }
 
