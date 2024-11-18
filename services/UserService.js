@@ -27,7 +27,9 @@ class UserService{
     loginService=async(user)=> {
         try {
             const {mail, password} = user
-            const userLogin = await User.findOne({where:{mail}})
+            const userLogin = await User.findOne({where:{mail},
+                attributes: ["id", "mail", "password", "RoleId"]
+            })
             if (!userLogin){
                 throw new Error("User not found")
             } else{
@@ -38,10 +40,12 @@ class UserService{
             const payload={
                 id:userLogin.id,
                 mail:userLogin.mail,
+                roleId: userLogin.RoleId
             }
 
             const token=genToken(payload)
             console.log("UserService " + "loginUserService + " + "token:" + token)
+            console.log("UserService " + "loginUserService + " + "payload:", payload)
 
             return token
         } catch(error){
