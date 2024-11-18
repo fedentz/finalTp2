@@ -42,7 +42,7 @@ User.init(
 
 User.beforeCreate(async(user)=> {
 
-const salt = await bcrypt.genSalt(10) //10 = saltRounds
+const salt = await bcrypt.genSalt(10) 
 
 user.salt = salt
 

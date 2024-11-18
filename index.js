@@ -19,5 +19,5 @@ await connection.sync({force:false})
 //await roleSeed()
 
 app.listen(SERVER_PORT, ()=> {
-    console.log("app listening on port 8000");
+    console.log("app listening on port 8000")
 })

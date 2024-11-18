@@ -3,7 +3,6 @@ import {genToken, verifyToken} from "../utils/token.js"
 
 class UserService{
     getAllUsersService=async()=> {
-        //return "getAllUserService"
         try {
             const data = await User.findAll({
                 attributes:["name", "password", "mail", "Roleid"],
@@ -15,7 +14,7 @@ class UserService{
         }
     }
     getUserByIdService = async (id) => {
-        return `getUserByIdService ${id}`;
+        return `getUserByIdService ${id}`
     }
     createUserService=async(userData)=> {
         try {
@@ -57,7 +56,7 @@ class UserService{
     }
     me = async (token) => {
         try {
-          const verify = verifyToken(token);
+          const verify = verifyToken(token)
           return verify.data;
         } catch (error) {
           throw error;

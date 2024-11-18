@@ -1,5 +1,5 @@
 import {Router} from "express"  
-import UserController from "../controllers/userController.js"
+import UserController from "../controllers/UserController.js"
 import { validateLogin } from "../midlewares/validateLogin.js"
 
 const userRoutes = Router()
@@ -15,6 +15,7 @@ userRoutes.get("/", userController.getAllUsers)
 userRoutes.get("/:id", userController.getUserById)
 userRoutes.put("/:id", userController.updateUser)
 userRoutes.delete("/delete/:id", userController.deleteUser)
+userRoutes.post("/logout", userController.logout)
 
 
 export default userRoutes
