@@ -3,7 +3,6 @@ import connection from "../connection/connection.js";
 import bcrypt from "bcrypt"
 
 class User extends Model{
-
     compare = async(passwordTxtPlain)=>{
         const data =  await bcrypt.compareSync(passwordTxtPlain, this.password)
         return data
@@ -32,6 +31,10 @@ User.init(
         },
         salt:{
             type: DataTypes.STRING
+        },    
+        phone: {
+            type: DataTypes.STRING, 
+            allowNull: true,
         }
     },
     {
@@ -41,17 +44,10 @@ User.init(
 )
 
 User.beforeCreate(async(user)=> {
-
 const salt = await bcrypt.genSalt(10) 
-
 user.salt = salt
-
 const hash = await bcrypt.hash(user.password,salt)
-
 user.password = hash
-
-console.log(salt)
-console.log("user.beforeCreate " + user)
 })
 
 export default User
