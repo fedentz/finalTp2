@@ -17,9 +17,10 @@ Product.init(
       type: DataTypes.FLOAT,
       allowNull: false,
     },
-    quantity: {
+    stock: { 
       type: DataTypes.INTEGER,
       allowNull: false,
+      defaultValue: 0, 
     },
     category: {
       type: DataTypes.STRING,

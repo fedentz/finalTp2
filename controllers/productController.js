@@ -50,6 +50,24 @@ const ProductController = {
       res.status(400).json({ error: error.message });
     }
   },
+
+  async adjustStock(req, res) {
+    try {
+      const { id } = req.params; 
+      const { adjustment, reason } = req.body;
+
+      if (!adjustment || isNaN(adjustment)) {
+        return res.status(400).json({ error: "Adjustment must be a valid number" });
+      }
+
+      const result = await ProductService.adjustStock(id, parseInt(adjustment), reason);
+
+      res.status(200).json(result);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
 };
+
 
 export default ProductController;

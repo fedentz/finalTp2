@@ -1,4 +1,5 @@
 import Product from "../models/Product.js";
+import Stock from "../models/Stock.js"
 
 const ProductService = {
   async createProduct(productData) {
@@ -36,6 +37,27 @@ const ProductService = {
     await product.destroy();
     return { message: "Product deleted successfully" };
   },
+
+  async adjustStock(productId, adjustment, reason = null) {
+    const product = await Product.findByPk(productId);
+    if (!product) {
+      throw new Error("Product not found");
+    }
+    product.stock += adjustment;
+    if (product.stock < 0) {
+      throw new Error("Stock cannot be negative");
+    }
+
+    await product.save();
+
+    const stockRecord = await Stock.create({
+      productId,
+      adjustment,
+      reason,
+    });
+
+    return { product, stockRecord };
+  }
 };
 
 export default ProductService;
