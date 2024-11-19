@@ -18,11 +18,7 @@ Pet.init(
     },
     photo: {
         type: DataTypes.STRING, 
-      },
-    userId: { 
-        type: DataTypes.INTEGER,
-        allowNull: false, 
-    },
+      }
     },
     {
       sequelize: connection,
