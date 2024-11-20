@@ -5,8 +5,8 @@ import { isAdmin } from "../midlewares/isAdmin.js";
 
 const stockRoutes = Router();
 
-stockRoutes.get("/", validateLogin, isAdmin, StockController.getAllStocks); // Todos los registros
-stockRoutes.get("/product/:productId", validateLogin, isAdmin, StockController.getAllStocksByProduct); // Por producto específico
+stockRoutes.get("/", validateLogin, isAdmin, StockController.getAllStocks); 
+stockRoutes.get("/product/:productId", validateLogin, isAdmin, StockController.getAllStocksByProduct); 
 stockRoutes.delete("/:id/delete", validateLogin, isAdmin, StockController.deleteStock);
 
 export default stockRoutes;

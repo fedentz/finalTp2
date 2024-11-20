@@ -3,7 +3,7 @@ import User from "../models/User.js";
 
 const petSeed = async () => {
   try {
-    const users = await User.findAll(); // Obtener los usuarios existentes
+    const users = await User.findAll(); 
     const pets = [];
 
     users.forEach((user) => {

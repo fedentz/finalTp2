@@ -32,20 +32,20 @@ const ProductService = {
   async deleteProduct(productId) {
     const product = await Product.findByPk(productId);
     if (!product) {
-      throw new Error("Product not found");
+      throw new Error("No se encontro el producto");
     }
     await product.destroy();
-    return { message: "Product deleted successfully" };
+    return { message: "Se borro el producto" };
   },
 
   async adjustStock(productId, adjustment, reason = null) {
     const product = await Product.findByPk(productId);
     if (!product) {
-      throw new Error("Product not found");
+      throw new Error("No se encontro el producto");
     }
     product.stock += adjustment;
     if (product.stock < 0) {
-      throw new Error("Stock cannot be negative");
+      throw new Error("Stock no puede ser negativo");
     }
 
     await product.save();

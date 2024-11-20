@@ -6,15 +6,15 @@ import { isAdmin } from "../midlewares/isAdmin.js";
 
 const productRoutes = Router();
 
-productRoutes.get("/", validateLogin, ProductController.getAllProducts);
-productRoutes.get("/:id", validateLogin, ProductController.getProductById);
+productRoutes.get("/", ProductController.getAllProducts);
+productRoutes.get("/:id", ProductController.getProductById);
 
 productRoutes.use(validateLogin)
 productRoutes.use(isAdmin)
-productRoutes.post("/create", validateLogin, isAdmin, ProductController.createProduct);
+productRoutes.post("/create", ProductController.createProduct);
 productRoutes.put("/:id", validateLogin, isAdmin, ProductController.updateProduct);
-productRoutes.delete("/:id", validateLogin, isAdmin, ProductController.deleteProduct);
-productRoutes.put("/:id/adjust-stock", validateLogin, isAdmin, ProductController.adjustStock);
+productRoutes.delete("/:id", ProductController.deleteProduct);
+productRoutes.put("/:id/adjust-stock", ProductController.adjustStock);
 
 
 export default productRoutes;

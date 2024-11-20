@@ -7,15 +7,15 @@ const userSeed = async () => {
   const users = [
     {
       name: "Admin User",
-      mail: "admin@example.com",
-      password: await bcrypt.hash("admin123", salt), // Contraseña: admin123
-      RoleId: 1, // Admin
+      mail: "admin@gmail.com",
+      password: await bcrypt.hash("admin123", salt),
+      RoleId: 1,
     },
     {
       name: "Regular User",
-      mail: "user@example.com",
-      password: await bcrypt.hash("user123", salt), // Contraseña: user123
-      RoleId: 2, // Usuario normal
+      mail: "user@gmail.com",
+      password: await bcrypt.hash("user123", salt),
+      RoleId: 2,
     },
   ];
 

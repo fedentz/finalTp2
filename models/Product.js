@@ -22,10 +22,6 @@ Product.init(
       allowNull: false,
       defaultValue: 0, 
     },
-    category: {
-      type: DataTypes.STRING,
-      allowNull: true, 
-    },
     images: {
       type: DataTypes.STRING, 
       allowNull: true,

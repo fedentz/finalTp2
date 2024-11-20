@@ -15,10 +15,7 @@ Pet.init(
     birthday: {
         type: DataTypes.DATEONLY,
         allowNull: false,
-    },
-    photo: {
-        type: DataTypes.STRING, 
-      }
+    }
     },
     {
       sequelize: connection,

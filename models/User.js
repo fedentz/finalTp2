@@ -19,11 +19,13 @@ User.init(
         mail:{
             type: DataTypes.STRING,
             allowNull:false,
-            unique: true
+            unique: true,
+            isEmail:true
         },
         password:{
             type: DataTypes.STRING,
-            allowNull:false
+            allowNull:false,
+            min:8
         }, 
         RoleId:{
             type:DataTypes.INTEGER,
@@ -35,6 +37,7 @@ User.init(
         phone: {
             type: DataTypes.STRING, 
             allowNull: true,
+            max:10
         }
     },
     {

@@ -7,7 +7,12 @@
     "start": "node --env-file .env .",
     "dev": "node --env-file .env.dev --watch .",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "roleSeed": "node --env-file .env.dev ./seed/roleSeed.js"
+    "seed": "node --env-file .env seed/allSeed.js",
+    "roleSeed": "node --env-file .env seed/roleSeed.js",
+    "userSeed": "node --env-file .env seed/userSeed.js",
+    "petSeed": "node --env-file .env seed/petSeed.js",
+    "productSeed": "node --env-file .env seed/productSeed.js",
+    "shippingZoneSeed": "node --env-file .env seed/shippingZoneSeed.js"
   },
   "author": "",
   "license": "ISC",

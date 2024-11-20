@@ -7,7 +7,6 @@ const productSeed = async () => {
       description: "Description of product 1",
       price: 100.0,
       stock: 50,
-      category: "Category A",
       images: null,
     },
     {
@@ -15,7 +14,6 @@ const productSeed = async () => {
       description: "Description of product 2",
       price: 200.0,
       stock: 30,
-      category: "Category B",
       images: null,
     },
     {
@@ -23,7 +21,6 @@ const productSeed = async () => {
       description: "Description of product 3",
       price: 300.0,
       stock: 20,
-      category: "Category A",
       images: null,
     },
     {
@@ -31,7 +28,6 @@ const productSeed = async () => {
       description: "Description of product 4",
       price: 400.0,
       stock: 15,
-      category: "Category C",
       images: null,
     },
     {
@@ -39,7 +35,6 @@ const productSeed = async () => {
       description: "Description of product 5",
       price: 500.0,
       stock: 10,
-      category: "Category B",
       images: null,
     },
   ];
