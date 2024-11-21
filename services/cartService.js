@@ -132,7 +132,7 @@ const CartService = {
         model: CartItem,
         include: {
           model: Product,
-          attributes: ["id", "name", "price", "category"],
+          attributes: ["id", "name", "price"],
         },
       },
     });

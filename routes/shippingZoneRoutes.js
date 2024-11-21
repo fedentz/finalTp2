@@ -5,15 +5,11 @@ import { validateLogin } from "../midlewares/validateLogin.js";
 
 const shippingRoutes = Router();
 
-
 shippingRoutes.post("/calculate", ShippingController.calculate);
 
-shippingRoutes.use(validateLogin)
-shippingRoutes.use(isAdmin)
-shippingRoutes.get("/zones", ShippingController.getAllZones);
-shippingRoutes.post("/create", ShippingController.createZone);
-shippingRoutes.put("/:id/updatezone", ShippingController.updateZone);
-shippingRoutes.delete("/:id/delete", ShippingController.deleteZone);
-
+shippingRoutes.get("/zones", validateLogin, isAdmin, ShippingController.getAllZones);
+shippingRoutes.post("/create", validateLogin, isAdmin, ShippingController.createZone);
+shippingRoutes.put("/:id/updatezone", validateLogin, isAdmin, ShippingController.updateZone);
+shippingRoutes.delete("/:id/delete", validateLogin, isAdmin, ShippingController.deleteZone);
 
 export default shippingRoutes;

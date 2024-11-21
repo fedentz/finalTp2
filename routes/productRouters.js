@@ -14,7 +14,7 @@ productRoutes.use(isAdmin)
 productRoutes.post("/create", ProductController.createProduct);
 productRoutes.put("/:id", validateLogin, isAdmin, ProductController.updateProduct);
 productRoutes.delete("/:id", ProductController.deleteProduct);
-productRoutes.put("/:id/adjust-stock", ProductController.adjustStock);
+productRoutes.put("/:id/adjuststock", ProductController.adjustStock);
 
 
 export default productRoutes;

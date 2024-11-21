@@ -28,20 +28,27 @@ const ShippingController = {
         res.status(400).send({ error: error.message });
       }
     },
-    // VALIDAR DATOS DE ENTRADA
-      async updateZone(req, res) {
-        try {
-          const { id } = req.params;
-          const {zoneName,motoPrice,autoPrice} = req.body;
-          if (!zoneName || !motoPrice || !autoPrice) {
-            throw new Error("Los campos no pueden estar vacios");
-          }
-          const updatedZone = await ShippingService.updateZone(id, updates);
-          res.status(200).send({ success: true, updatedZone });
-        } catch (error) {
-          res.status(400).send({ error: error.message });
+    async updateZone(req, res) {
+      try {
+        const { id } = req.params;
+        const { zoneName, motoPrice, autoPrice } = req.body;
+        if (!zoneName || !motoPrice || !autoPrice) {
+          throw new Error("Los campos no pueden estar vacíos");
         }
-      },
+        if (isNaN(Number(motoPrice)) || isNaN(Number(autoPrice))) {
+          throw new Error("El precio del servicio debe ser numérico");
+        }
+        const updates = {
+          zoneName,
+          motoPrice: Number(motoPrice),
+          autoPrice: Number(autoPrice),
+        };
+        const updatedZone = await ShippingService.updateZone(id, updates);
+        res.status(200).send({ success: true, updatedZone });
+      } catch (error) {
+        res.status(400).send({ error: error.message });
+      }
+    },
     
       async deleteZone(req, res) {
         try {
