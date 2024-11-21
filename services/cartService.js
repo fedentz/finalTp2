@@ -1,6 +1,8 @@
 import Cart from "../models/cart.js";
 import CartItem from "../models/CartItem.js";
 import Product from "../models/Product.js";
+import sequelize from "../connection/connection.js"; 
+
 
 const CartService = {
   async getCart(userId) {
@@ -18,60 +20,90 @@ const CartService = {
 
     return cart;
   },
-
   async addProductToCart(userId, productId, quantity) {
-    console.log("CartService - userId:", userId);
-    console.log("CartService - productId:", productId);
-    console.log("CartService - quantity:", quantity);
-
-    const cart = await this.getCart(userId);
-
-    const product = await Product.findByPk(productId);
-    if (!product) {
-      throw new Error("Product not found");
+    try {
+      const cart = await this.getCart(userId);
+      const product = await Product.findByPk(productId);
+      if (!product) {
+        throw new Error("Producto no encontrado");
+      }
+  
+      if (product.stock < quantity) {
+        throw new Error("Stock insuficiente");
+      }
+  
+      const cartItem = await CartItem.findOne({
+        where: { cartId: cart.id, productId },
+      });
+  
+      if (cartItem) {
+        cartItem.quantity += quantity;
+        await cartItem.save();
+      } else {
+        await CartItem.create({
+          cartId: cart.id,
+          productId,
+          quantity,
+          price: product.price,
+        });
+      }
+  
+      product.stock -= quantity;
+      await product.save();
+  
+      const updatedCart = await this.calculateCartTotal(cart.id);
+  
+      return updatedCart;
+    } catch (error) {
+      throw error;
     }
-
-    const cartItem = await CartItem.findOne({
-      where: { cartId: cart.id, productId },
-    });
-
-    if (cartItem) {
-      cartItem.quantity += quantity;
-      await cartItem.save();
-    } else {
-      await CartItem.create({ cartId: cart.id, productId, quantity });
-    }
-
-    return this.getCart(userId);
-  },
+  }
+  ,
 
   async updateProductQuantity(userId, productId, quantity) {
     const cart = await this.getCart(userId);
+
     const cartItem = await CartItem.findOne({
       where: { cartId: cart.id, productId },
     });
 
     if (!cartItem) {
-      throw new Error("Product not found in cart");
+      throw new Error("No se encontró el producto en el carrito");
     }
 
-    if (quantity <= 0) {
-      await cartItem.destroy();
-    } else {
-      cartItem.quantity = quantity;
-      await cartItem.save();
+    const product = await Product.findByPk(productId);
+    if (!product) {
+      throw new Error("No se encontró el producto");
     }
+
+    const difference = quantity - cartItem.quantity;
+    if (product.stock < difference) {
+      throw new Error("No hay suficiente stock disponible");
+    }
+
+    cartItem.quantity = quantity;
+    await cartItem.save();
+
+    product.stock -= difference;
+    await product.save();
 
     return this.getCart(userId);
   },
 
   async removeProductFromCart(userId, productId) {
     const cart = await this.getCart(userId);
+
     const cartItem = await CartItem.findOne({
       where: { cartId: cart.id, productId },
     });
 
     if (cartItem) {
+      const product = await Product.findByPk(productId);
+      if (product) {
+        product.stock += cartItem.quantity;
+        await product.save();
+      }
+
       await cartItem.destroy();
     }
 
@@ -80,6 +112,16 @@ const CartService = {
 
   async clearCart(userId) {
     const cart = await this.getCart(userId);
+
+    const cartItems = await CartItem.findAll({ where: { cartId: cart.id } });
+    for (const item of cartItems) {
+      const product = await Product.findByPk(item.productId);
+      if (product) {
+        product.stock += item.quantity;
+        await product.save();
+      }
+    }
+
     await CartItem.destroy({ where: { cartId: cart.id } });
     return this.getCart(userId);
   },
@@ -97,32 +139,26 @@ const CartService = {
 
     if (!cart) throw new Error("Cart not found");
 
-    // Agrupar productos por productId
     const groupedItems = cart.CartItems.reduce((acc, item) => {
       const existing = acc.find((i) => i.productId === item.productId);
       if (existing) {
         existing.quantity += item.quantity;
-        existing.total += item.quantity * item.price;
+        existing.total += item.quantity * item.Product.price;
       } else {
         acc.push({
           productId: item.productId,
           name: item.Product.name,
-          price: item.price,
+          price: item.Product.price,
           quantity: item.quantity,
-          total: item.quantity * item.price,
+          total: item.quantity * item.Product.price,
         });
       }
       return acc;
     }, []);
 
-    // Calcular subtotal
     const subtotal = groupedItems.reduce((sum, item) => sum + item.total, 0);
-
-    // Aplicar descuento (si existe)
     const discount = cart.discount || 0;
     const totalPrice = subtotal - discount;
-
-    // Actualizar el total en el carrito
     await cart.update({ totalPrice });
 
     return {

@@ -44,8 +44,6 @@ class UserService{
             }
 
             const token=genToken(payload)
-            console.log("UserService " + "loginUserService + " + "token:" + token)
-            console.log("UserService " + "loginUserService + " + "payload:", payload)
 
             return token
         } catch(error){

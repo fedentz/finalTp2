@@ -30,8 +30,14 @@ class UserController{
     createUser= async(req, res)=>{
         try{
             const{name, password, mail, RoleId} = req.body 
+            if (!name || !password || !mail){
+                throw new Error("Los campos no deben estar vacios")
+            }
+            const emailFormatoCorrecto = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
+            if (!emailFormatoCorrecto.test(mail)){
+                throw new Error("Formato invalido email")
+            }
             const data = await this.userService.createUserService({name, password, mail, RoleId})
-            console.log(data)
             res
             .status(200)
             .send({success:true, message: data})
@@ -43,9 +49,11 @@ class UserController{
     }
     login= async(req, res)=>{
         try{
-            const{password, mail} = req.body 
+            const{password, mail} = req.body
+            if (!password || !mail){
+                throw new Error("Los campos no deben estar vacios")
+            } 
             const data = await this.userService.loginService({password, mail})
-            console.log(data)
             res.cookie("token",data)
             res
             .status(200)

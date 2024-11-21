@@ -1,16 +1,15 @@
 import PetService from "../services/PetService.js";
 
 const PetController = {
-  //VALIDAR tipos de datos!!
   async addPet(req, res) {
     try {
       const userId = req.userId;
       const { name, birthday, age } = req.body
-      if (!name || !birthday) {
-        return res.status(400).send({ error: "Name y Birthdayno pueden estar vacias" });
+      if (!name || !birthday || !age) {
+        throw new Error("Los campos no pueden estar vacios");
       }
       const newPet = await PetService.addPet(userId, { name, birthday, age });
-      res.status(201).send(newPet);
+      res.status(200).send(newPet);
     } catch (error) {
       res.status(400).send({ error: error.message });
     }
@@ -20,25 +19,25 @@ const PetController = {
       const userId = req.userId; 
       const { id } = req.params; 
       const pet = await PetService.getPet(id, userId);
-      res.status(201).send(pet); 
+      res.status(200).send(pet); 
     } catch (error) {
       res.status(400).send({ error: error.message });
     }
   },
-  //VALIDAR tipos de datos!!
   async updatePet(req, res) {
     try {
       const userId = req.userId; 
       const { id } = req.params; 
-      const { name, birthDay, age } = req.body; 
-
+      const { name, birthday, age } = req.body; 
+      if (!name || !birthday || !age) {
+        throw new Error("Los campos no pueden estar vacios");
+      }
       const updatedPet = await PetService.updatePet(
         id,
         userId,
-        { name, birthDay, age }, 
+        { name, birthday, age }, 
       );
-
-      res.status(201).send(updatedPet);
+      res.status(200).send(updatedPet);
     } catch (error) {
       res.status(400).send({ error: error.message });
     }
@@ -47,9 +46,8 @@ const PetController = {
     try {
       const userId = req.userId; 
       const { id } = req.params; 
-
       const result = await PetService.deletePet(id, userId);
-      res.status(201).send(result);
+      res.status(200).send(result);
     } catch (error) {
       res.status(400).send({ error: error.message });
     }
@@ -58,7 +56,7 @@ const PetController = {
     try {
       const userId = req.userId; 
       const pets = await PetService.getMyPets(userId);
-      res.status(201).send(pets); 
+      res.status(200).send(pets); 
     } catch (error) {
       res.status(400).send({ error: error.message });
     }

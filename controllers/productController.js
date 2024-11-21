@@ -3,9 +3,15 @@ import ProductService from "../services/productService.js";
 const ProductController = {
   async createProduct(req, res) {
     try {
-      const productData = req.body; //VALIDAR
-      const newProduct = await ProductService.createProduct(productData);
-      res.status(201).send(newProduct);
+      const {price, name, description} = req.body; 
+      if (!price ||!name ||!description){
+        throw new Error ("Los campos no pueden estar vaicos")
+      } 
+      if (price <= 1){
+        throw new Error ("Precio Invalido")
+      }
+      const newProduct = await ProductService.createProduct({price, name, description});
+      res.status(200).send(newProduct);
     } catch (error) {
       res.status(400).send({ error: error.message });
     }
@@ -14,7 +20,7 @@ const ProductController = {
   async getAllProducts(req, res) {
     try {
       const products = await ProductService.getAllProducts();
-      res.status(201).send(products);
+      res.status(200).send(products);
     } catch (error) {
       res.status(400).send({ error: error.message });
     }
@@ -24,7 +30,7 @@ const ProductController = {
     try {
       const { id } = req.params;
       const product = await ProductService.getProductById(id);
-      res.status(201).send(product);
+      res.status(200).send(product);
     } catch (error) {
       res.status(404).send({ error: error.message });
     }
@@ -33,9 +39,15 @@ const ProductController = {
   async updateProduct(req, res) {
     try {
       const { id } = req.params;
-      const updateData = req.body; //VALIDAR
-      const updatedProduct = await ProductService.updateProduct(id, updateData);
-      res.status(201).send(updatedProduct);
+      const {price, name, description} = req.body; 
+      if (!price ||!name ||!description){
+        throw new Error ("Los campos no pueden estar vaicos")
+      } 
+      if (price <= 1){
+        throw new Error ("Precio Invalido")
+      }
+      const updatedProduct = await ProductService.updateProduct(id, {price, name, description});
+      res.status(200).send(updatedProduct);
     } catch (error) {
       res.status(400).send({ error: error.message });
     }
@@ -45,7 +57,7 @@ const ProductController = {
     try {
       const { id } = req.params;
       const result = await ProductService.deleteProduct(id);
-      res.status(201).send(result);
+      res.status(200).send(result);
     } catch (error) {
       res.status(400).send({ error: error.message });
     }
@@ -62,7 +74,7 @@ const ProductController = {
 
       const result = await ProductService.adjustStock(id, parseInt(adjustment), reason);
 
-      res.status(201).send(result);
+      res.status(200).send(result);
     } catch (error) {
       res.status(400).send({ error: error.message });
     }

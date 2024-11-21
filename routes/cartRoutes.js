@@ -11,6 +11,4 @@ cartRoutes.put("/update", CartController.updateProductQuantity);
 cartRoutes.delete("/remove/:productId", CartController.removeProductFromCart); 
 cartRoutes.delete("/clear", CartController.clearCart); 
 
-//falta para admin ver todos los carritos
-
 export default cartRoutes;

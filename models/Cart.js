@@ -15,10 +15,6 @@ Cart.init(
       type: DataTypes.FLOAT, 
       allowNull: false,
       defaultValue: 0,
-    },
-    discount: {
-      type: DataTypes.FLOAT, 
-      allowNull: true,
     }
   },
   {

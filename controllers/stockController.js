@@ -4,7 +4,7 @@ const StockController = {
     async getAllStocks(req, res) {
         try {
           const stocks = await StockService.getAllStocks(); 
-          res.status(201).send(stocks);
+          res.status(200).send(stocks);
         } catch (error) {
           res.status(400).send({ error: error.message });
         }
@@ -14,7 +14,7 @@ const StockController = {
         try {
           const { productId } = req.params; 
           const stocks = await StockService.getAllStocksByProduct(productId); 
-          res.status(201).send(stocks);
+          res.status(200).send(stocks);
         } catch (error) {
           res.status(400).send({ error: error.message });
         }
@@ -23,7 +23,7 @@ const StockController = {
     try {
       const { id } = req.params; 
       const result = await StockService.deleteStock(id); 
-      res.status(201).send(result);    
+      res.status(200).send(result);    
     } catch (error) {
       res.status(400).send({ error: error.message }); 
     }

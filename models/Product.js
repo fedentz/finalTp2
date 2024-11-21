@@ -21,11 +21,7 @@ Product.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0, 
-    },
-    images: {
-      type: DataTypes.STRING, 
-      allowNull: true,
-    },
+    }
   },
   {
     sequelize: connection,

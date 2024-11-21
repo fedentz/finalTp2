@@ -12,11 +12,13 @@ ShippingZone.init(
     },
     motoPrice: { 
       type: DataTypes.FLOAT, 
-      allowNull: false 
+      allowNull: false,
+      defaultValue: 0,  
     },
     autoPrice: { 
       type: DataTypes.FLOAT, 
-      allowNull: false 
+      allowNull: false,
+      defaultValue: 0,  
     },
   },
   {

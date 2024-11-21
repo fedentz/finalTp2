@@ -11,6 +11,7 @@ Pet.init(
     age: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        defaultValue: 0,  
     },
     birthday: {
         type: DataTypes.DATEONLY,

@@ -11,10 +11,9 @@ shippingRoutes.post("/calculate", ShippingController.calculate);
 shippingRoutes.use(validateLogin)
 shippingRoutes.use(isAdmin)
 shippingRoutes.get("/zones", ShippingController.getAllZones);
-shippingRoutes.post("/zones", ShippingController.createZone);
-shippingRoutes.put("/zones/:id", ShippingController.updateZone);
-shippingRoutes.delete("/zones/:id", ShippingController.deleteZone);
-shippingRoutes.put("/zones/increase-prices", ShippingController.increasePrices);
+shippingRoutes.post("/create", ShippingController.createZone);
+shippingRoutes.put("/:id/updatezone", ShippingController.updateZone);
+shippingRoutes.delete("/:id/delete", ShippingController.deleteZone);
 
 
 export default shippingRoutes;
