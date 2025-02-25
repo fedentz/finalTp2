@@ -4,15 +4,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node --env-file .env .",
-    "dev": "node --env-file .env.dev --watch .",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "seed": "node --env-file .env seed/allSeeds.js",
-    "roleSeed": "node --env-file .env seed/roleSeed.js",
-    "userSeed": "node --env-file .env seed/userSeed.js",
-    "petSeed": "node --env-file .env seed/petSeed.js",
-    "productSeed": "node --env-file .env seed/productSeed.js",
-    "shippingZoneSeed": "node --env-file .env seed/shippingZoneSeed.js"
+    "start": "node .",
+    "dev": "node --watch .",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
